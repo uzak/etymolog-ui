@@ -1,0 +1,6 @@
+* migrate to typescript
+* use mock data
+* use real DB file
+* word details can't have file name of the pill (it is not stored yet)
+--
+* implement wireframes (mockup)
