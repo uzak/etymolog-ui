@@ -3,10 +3,9 @@
 # Martin Užák, 2020-05-02 14:31
 #
 
-all: run
-
-run:
-	yarn serve
+.PHONY:
+serve:
+	yarn serve --port 8000
 
 
 # vim:ft=make

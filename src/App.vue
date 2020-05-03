@@ -5,15 +5,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import Footer from './components/Footer.vue'
 
-export default {
+export default Vue.extend({
   name: 'App',
   components: {
     Footer
   }
-}
+});
 </script>
 
 <style>
@@ -22,16 +23,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
   max-width: 800px;
-  /*
-  border: 1px solid black;
-  */
+  margin-top: 60px;
   
 }
-
-a {
-  color: #42b983;
-}
-
 </style>

@@ -1,7 +1,11 @@
-* use vue store
-* migrate to typescript
-* use mock data
+* use vue store?
+* BUG: because of vue-router favicons don't work
+
+* webpack?
+* sass-loader?
 * use real DB file
 --
+* use mock data
+* migrate to typescript
 * word details can't have file name of the pill (it is not stored yet)
 * implement wireframes (mockup)
