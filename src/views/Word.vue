@@ -11,12 +11,12 @@
     <pre>
       *                                           
       |
-    <a href="">sa:dvipa {dvi+ap} = en:island</a>             <a href="">james_cooper/ragusa.pill</a> <a href="">[1]</a>
-      . <a href="">sa:dvi {d+vi} = en:both sides</a>         <a href="">james_cooper/dvi.pill</a> <a href="">[1]</a> <a href="">james_cooper/ragusa.pill</a> <a href="">[2]</a>
-      . <a href="">sa:ap = en:water</a>                      <a href="">james_cooper/ragusa.pill</a> <a href="">[1]</a>
+    <a href="">sa:dvipa {dvi+ap} = en:island</a>             <a href="">[1]</a>
+      . <a href="">sa:dvi {d+vi} = en:both sides</a>         <a href="">[1]</a>, <a href="">[2]</a>
+      . <a href="">sa:ap = en:water</a>                      <a href="">[1]</a>
       | 
- <b>=> celtic:Dubron</b>                             <a href="">james_cooper/ragusa.pill</a> <a href="">[1]</a>
-    -> <a href="">en:Dubrovnik</a>                           <a href="">james_cooper/ragusa.pill</a> <a href="">[1]</a>
+ <b>=> celtic:Dubron</b>                             <a href="">[1]</a>
+    -> <a href="">en:Dubrovnik</a>                           <a href="">[1]</a>
     </pre>
   </div>
 </template>
