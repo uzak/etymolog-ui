@@ -1,77 +1,126 @@
 <template>
   <div>
-    <h1>Language: {{ $route.params.id }}</h1>
+    <h1>Language: {{ lang }}</h1>
 
     <div>
-      <input checked type="checkbox" id="showAdditionaInfo">
+      <input v-model="showAdditionalInfo" type="checkbox" id="showAdditionalInfo">
       <label for="showAdditionalInfo">Show additional info</label>
     </div>
     <div>
-      11 Words:
+      {{ words().length }} words:
     </div>
 
-    <ul>
-      <li v-for="word in words()" :key="word.value">
-        {{ word }}
-      </li>
-    </ul>
-
-    <div class="entry">
+    <span class="entry" v-for="word in words()" :key="word.toString()">
       <div>
-        <router-link to="/word/celtic:Belenus">Belenus</router-link>
+        <router-link :to="'/word/' + word">{{ word.value }}</router-link>
+        <span v-for="components in unions(word)" :key=components.toString()>
+          { 
+          <span v-for="(component, index) in components" :key=component.value>
+            <router-link :to="'/word/' + component">{{ component.toString(lang) }}</router-link>
+            <span v-if="index + 1 < components.length">
+              +
+            </span>
+          </span>
+          }
+        </span>
       </div>
-      <div class="indent1">
-        ~ <router-link to="/word/semitic:Baal">semitic:Baal</router-link>
-      </div>
-      <div class="indent1">
-        -> <router-link to="/word/sa:bhalu">en:bhalu</router-link>
-      </div>
-    </div>
+      <div v-if="showAdditionalInfo">
 
+        <div class="indent1 comments">
+          <div v-for="comment in comments(word)" :key="comment">
+            {{ comment }}
+          </div>
+        </div>
+
+        <div class="indent1 equals">
+          <div v-for="tr in equals(word)" :key="tr.value">
+            = <router-link :to="'/word/' + tr">{{ tr }}</router-link>
+          </div>
+        </div>
+
+        <div class="indent1 related">
+          <div v-for="rel in related(word)" :key="rel.value">
+            ~ <router-link :to="'/word/' + rel">{{ rel }}</router-link>
+          </div>
+        </div>
+        
+        <div class="indent1 derived">
+            <Derived :word="word"/>
+        </div>
+        
+      </div>
+      
+    </span>
     
-    <div class="entry">
-      <div>
-        <router-link to="/word/celtic:cathraige">cathraige</router-link>
-      </div>
-      <div class="indent1">
-        servant of the four
-      </div>
-      <div class="indent1">
-        original name of Saint Patrick
-      </div>
-    </div>
-
-    
-    <div class="entry">
-      <div>
-        <router-link to="/word/celtic:dubras">dubras</router-link>
-      </div>
-      <div class="indent1">
-        = <router-link to="/word/en:waters">en:waters</router-link>
-      </div>
-      <div class="indent1">
-        -> <router-link to="/word/sa:dvipa">sa:dvipa</router-link>
-        {<router-link to="/word/sa:dvi">dvi</router-link> + <router-link to="/word/sa:ap">ap</router-link>}
-      </div>
-    </div>
-
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import Model from '@/model'
+
+let Derived = Vue.extend({
+  name: 'Derived',
+  functional: true, // preto nie je this...
+  props: ['word'],
+  render: function(createElement, context) {
+    let word = context.props.word
+
+    function derivedChain(word, result) {
+      for (let w of word.derivedFrom) {
+        result.push(w)
+        derivedChain(w.left, result)
+      }
+      return result
+    }
+
+    let result = new Array()
+    derivedChain(word, result);
+    let count = 0
+    return createElement('div', result.map(item => {
+      let symbol = count++ < result.length ? " -> ": "";
+      return [
+        symbol,
+        createElement('router-link', { props: { 'to' : '/word/'+ item.left.toString() }}, item.left.toString())
+      ]
+    }));
+  }
+});
 
 export default Vue.extend({
   name: 'DictionaryDetail',
   data() {
     return {
+      showAdditionalInfo: this.$route.query.showAdditionalInfo !== undefined
     }
+  },
+  computed: {
+    lang: function() { return this.$route.params.id; }
+  },
+  components: {
+    Derived,
   },
   methods: {
     words() {
       let lang = Model.get_lang(this.$route.params.id);
-      return lang.words;
+      let result = Array.from(lang.words.values());
+      result.sort((a, b) => a.value.localeCompare(b.value))
+      return result;
+    },
+    related(word) {
+      return word.related.map(r => r.other(word));
+    },
+    equals(word) {
+      return word.equals.map(r => r.other(word));
+    },
+    derived(word) {
+      return word.derivedFrom.map(r => r.left);
+    },
+    comments(word) {
+      return word.comments;
+    },
+    unions(word) {
+      return word.unions.map(x => x.components);
     }
   }
 });
@@ -79,11 +128,28 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+
 .entry {
   margin-top: 20px;
 }
 
 .indent1 {
   margin-left: 50px;
+}
+
+.indent1.comments {
+  background-color: beige;
+}
+.indent1.equals a {
+  color: #42b983;
+  text-decoration: none;
+}
+.indent1.related a {
+  color: olive;
+  text-decoration: none;
+}
+.indent1.derived a {
+  color: navy;
+  text-decoration: none;
 }
 </style>
