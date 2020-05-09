@@ -3,8 +3,8 @@
     <h1>Language: {{ lang }}</h1>
 
     <div>
-      <input v-model="showAdditionalInfo" type="checkbox" id="showAdditionalInfo">
-      <label for="showAdditionalInfo">Show additional info</label>
+      <input v-model="hideAdditionalInfo" type="checkbox" id="hideAdditionalInfo">
+      <label for="hideAdditionalInfo">Hide additional info</label>
     </div>
     <div>
       {{ words().length }} words:
@@ -24,7 +24,7 @@
           }
         </span>
       </div>
-      <div v-if="showAdditionalInfo">
+      <div v-if="!hideAdditionalInfo">
 
         <div class="indent1 comments">
           <div v-for="comment in comments(word)" :key="comment">
@@ -64,19 +64,8 @@ let Derived = Vue.extend({
   functional: true, // preto nie je this...
   props: ['word'],
   render: function(createElement, context) {
-    let word = context.props.word
-
-    function derivedChain(word, result) {
-      for (let w of word.derivedFrom) {
-        result.push(w)
-        derivedChain(w.left, result)
-      }
-      return result
-    }
-
-    let result = new Array()
-    derivedChain(word, result);
     let count = 0
+    let result = context.props.word.derivedChain()
     return createElement('div', result.map(item => {
       let symbol = count++ < result.length ? " -> ": "";
       return [
@@ -91,7 +80,7 @@ export default Vue.extend({
   name: 'DictionaryDetail',
   data() {
     return {
-      showAdditionalInfo: this.$route.query.showAdditionalInfo !== undefined
+      hideAdditionalInfo: this.$route.query.hideAdditionalInfo !== undefined
     }
   },
   computed: {

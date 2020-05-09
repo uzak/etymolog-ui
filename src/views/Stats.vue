@@ -1,26 +1,28 @@
 <template>
   <div>
     <h1>Stats</h1>
-    <div>Derived: 819</div>
-    <div>Equals: 1800</div>
-    <div>Related: 107</div>
+    <div>Derived: {{stats.derived}}</div>
+    <div>Equals: {{stats.equals}}</div>
+    <div>Related: {{stats.related}}</div>
     <div>
-      Tags (7): 
-      <router-link to="/tag/river">#river</router-link>,
-      <router-link to="/tag/city">#city</router-link>,
-      <router-link to="/tag/island">#island</router-link>, 
-      <router-link to="/tag/planet">#planet</router-link>, 
-      <router-link to="/tag/geo">#geo</router-link>, 
-      <router-link to="/tag/god">#god</router-link>, 
-      <router-link to="/tag/mountain">#mountain</router-link>
+      Tags ({{ stats.tags.length }}): 
+      <div v-for="tag in stats.tags" :key=tag>
+        <router-link :to="'/tag/' + tag">#{{tag}}</router-link>,
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Model from '@/model'
 
 export default {
   name: 'Stats',
+  data() {
+    return {
+      "stats": Model.stats()
+    }    
+  }
 }
 </script>
 

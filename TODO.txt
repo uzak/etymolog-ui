@@ -1,6 +1,18 @@
 * use real DB file
-* use UI version from git
+    - Stats
+        Rel.Table
+    - Tags
+* add navigation links to every view
+* move LinkedList to util.ts
+* Styles from Word.vue belong to WordTree
+* hideAdditionalDetails - store in localStorage
+* CommentComponent for WordTree nodes
+* Add Comments to RelationCommentsNode
 
+* use pug or something similar
+* each language has its own color
+
+* Search - highlight matches in color
 * add i18n
 * webpack?
 * sass-loader?
@@ -11,3 +23,4 @@
 * implement wireframes (mockup)
 * use vue store? -> no
 * BUG: because of vue-router favicons don't work
+* use UI version from git
