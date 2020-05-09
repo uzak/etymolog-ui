@@ -6,30 +6,12 @@
         <th>Language</th>
         <th>Size (Words)</th>
       </tr>
-      <tr>
+      <tr v-for="language in languages" :key=language.name>
         <td>
-          <router-link to="/dictionaries/en">en</router-link>
+          <router-link :to="'/dictionaries/' + language.name">{{ language.name }}</router-link>
         </td>
         <td>
-          1503
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <router-link to="/dictionaries/sa">sa</router-link>
-        </td>
-        <td>
-          721
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <router-link to="/dictionaries/en">sk</router-link>
-        </td>
-        <td>
-          328
+          {{ language.wordCount() }}
         </td>
       </tr>
     </table>
@@ -37,9 +19,15 @@
 </template>
 
 <script>
+import Model from '@/model'
 
 export default {
   name: 'Dictionaries',
+  computed: {
+    languages: function() { 
+      return Model.allLanguages()
+    }
+  },
 }
 </script>
 

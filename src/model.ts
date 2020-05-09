@@ -5,23 +5,42 @@
 class Model {
     public static Version: Number;
 
-    public static get_lang(name: String): Language {
+    public static get_lang(name: string): Language {
         return Language.get(name);
     }
     
-    public static get_word(str: String): Word {
+    public static get_word(str: string): Word {
         let [lang_str, value] = str.split(":")
         let lang = Language.get(lang_str)
         return lang.get_word(value)
     }
+
+    public static allLanguages(): Array<Language> {
+        let result = Array.from(Language.Table.values())
+        result.sort((a,b) => b.wordCount() - a.wordCount())
+        return result
+    }
+
+    public static stats() {
+        return {
+            "derived": 1,
+            "equals": 1,
+            "related": 1,
+            "tags": [],
+        }
+    }
 }
 
 class Language {
-    public name:  String;
-    public words: Map<String, Word> = new Map();
-    private static Table: Map<String, Language> = new Map();
+    public name:  string;
+    public words: Map<string, Word> = new Map();
+    static Table: Map<string, Language> = new Map();
 
-    public static get(name: String) {
+    public wordCount(): number {
+        return Array.from(this.words).length
+    }
+
+    public static get(name: string) {
         let key = name.toLowerCase()
         let obj = Language.Table.get(key);
         if (!obj) {
@@ -31,7 +50,7 @@ class Language {
         return obj;
     }
     
-    public get_word(value: String): Word {
+    public get_word(value: string): Word {
         let result = this.words.get(value);
         if (!result) {
             result = new Word(value, this);
@@ -40,21 +59,21 @@ class Language {
         return result;
     }
 
-    private constructor(name: String) {
+    private constructor(name: string) {
         this.name = name;
     }
 }
 
 class Entity {
-    public comments: Array<String> = [];
-    public sources:  Array<String> = [];
+    public comments: Array<string> = [];
+    public sources:  Array<string> = [];
 }
 
 class Word extends Entity {
-    public value:       String;
+    public value:       string;
     public lang:        Language;
 
-    public tags:        Array<String> = [];
+    public tags:        Array<string> = [];
     // computed props
     public derivedFrom: Array<Relationship> = [];
     public derives:     Array<Relationship> = [];
@@ -63,7 +82,7 @@ class Word extends Entity {
     public unions:      Array<Union> = [];
     public inUnions:    Array<Union> = [];
 
-    constructor(value: String, lang: Language, ...comments: Array<String>) {
+    constructor(value: string, lang: Language, ...comments: Array<string>) {
         super();
         this.value = value;
         this.lang = lang;
@@ -71,12 +90,26 @@ class Word extends Entity {
         Array.prototype.push.apply(this.comments, comments);
     }
 
-    public toString(lang: String) {
+    public toString(lang: string) {
         if (lang === this.lang.name) 
             return this.value;
 
         return `${this.lang.name}:${this.value}`;
     }
+
+    private _derivedChain(result: Array<Relationship>) {
+      for (let w of this.derivedFrom) {
+        result.push(w)
+        w.left._derivedChain(result)
+      }
+    }
+    
+    public derivedChain(): Array<Relationship> {
+      let result = new Array()
+      this._derivedChain(result)
+      return result
+    }
+
 }
 
 class Union {
@@ -99,7 +132,7 @@ class Relationship extends Entity {
     public left: Word;
     public right: Word;
     
-    constructor(left: Word, right: Word, ...comments: Array<String>) {
+    constructor(left: Word, right: Word, ...comments: Array<string>) {
         super();
         this.left = left;
         this.right = right;
@@ -108,9 +141,9 @@ class Relationship extends Entity {
 }
 
 class Equals extends Relationship {
-    public static SYMBOL: String = "=";
+    public static SYMBOL: string = "=";
 
-    constructor(left: Word, right: Word, ...comments: Array<String>) {
+    constructor(left: Word, right: Word, ...comments: Array<string>) {
         super(left, right);
 
         left.equals.push(this);
@@ -123,9 +156,9 @@ class Equals extends Relationship {
 }
 
 class Derived extends Relationship {
-    public static SYMBOL: String = "->";
+    public static SYMBOL: string = "->";
 
-    constructor(left: Word, right: Word, ...comments: Array<String>) {
+    constructor(left: Word, right: Word, ...comments: Array<string>) {
         super(left, right);
 
         left.derives.push(this);
@@ -134,9 +167,9 @@ class Derived extends Relationship {
 }
 
 class Related extends Relationship {
-    public static SYMBOL: String = "~";
+    public static SYMBOL: string = "~";
 
-    constructor(left: Word, right: Word, ...comments: Array<String>) {
+    constructor(left: Word, right: Word, ...comments: Array<string>) {
         super(left, right);
 
         left.related.push(this);

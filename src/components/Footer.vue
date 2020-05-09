@@ -2,7 +2,7 @@
   <div class="footer">
     <hr>
     <p>
-      UI V<b>1.00</b>, DB V<b>{{ db_version }} </b> from 2020-05-02, contact <a href="mailto:etymolog@mailbox.org">etymolog@mailbox.org</a>
+      UI V<b>{{ ui_version }}</b>, DB V<b>{{ db_version }}</b>, contact <a href="mailto:etymolog@mailbox.org">etymolog@mailbox.org</a>
     </p>
   </div>
 </template>
@@ -15,6 +15,7 @@ export default {
   data() { 
     return { 
       db_version: Model.Version,
+      ui_version: process.env.PACKAGE_VERSION || 'DEFAULT'
     }
   },
 
