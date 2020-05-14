@@ -4,7 +4,8 @@ import Main from './views/Main.vue'
 import Dictionaries from './views/Dictionaries.vue'
 import DictionaryDetail from './views/DictionaryDetail.vue'
 import Word from './views/Word.vue'
-import Tag from './views/Tag.vue'
+import TagDetail from './views/TagDetail.vue'
+import Tags from './views/Tags.vue'
 import Search from './views/Search.vue'
 import Stats from './views/Stats.vue'
 
@@ -35,7 +36,12 @@ export default new Router({
     {
       path: '/tag/:id',
       name: 'tag',
-      component: Tag
+      component: TagDetail
+    },
+    {
+      path: '/tags',
+      name: 'tags',
+      component: Tags
     },
     {
       path: '/search',

@@ -1,7 +1,6 @@
 * use real DB file
     - Stats
         Rel.Table
-    - Tags
 * add navigation links to every view
 * move LinkedList to util.ts
 * hideAdditionalDetails - store in localStorage

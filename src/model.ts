@@ -26,9 +26,13 @@ class Model {
             "derived": 1,
             "equals": 1,
             "related": 1,
-            "tags": [],
+            "tags": Tag.Table,
         }
     }
+}
+
+class Tag {
+    public static Table: Map<string, Array<Word>> = new Map();
 }
 
 class Language {
@@ -88,6 +92,16 @@ class Word extends Entity {
         this.lang = lang;
         lang.words.set(value, this);
         Array.prototype.push.apply(this.comments, comments);
+    }
+
+    public setTags(tags: Array<string>) {
+        this.tags = tags;
+        tags.map(t => {
+            if (!Tag.Table.has(t)) {
+                Tag.Table.set(t, new Array());
+            }
+            Tag.Table.get(t)?.push(this);
+        });
     }
 
     public toString(lang: string) {
@@ -226,6 +240,7 @@ for (const word of data.words) {
     let w = new Word(word.value, l);
     w.comments = word.comments;
     w.sources = word.sources;
+    w.setTags(word.tags);
 }
 
 Object.entries(data.relationships).forEach(

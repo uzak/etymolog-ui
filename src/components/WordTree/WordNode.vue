@@ -29,6 +29,13 @@ export default Vue.component('WordNode', Vue.extend({
     function link(word) {
       return createElement("router-link", { attrs: { to: "/word/" + word.toString()}}, word.toString())
     }
+
+    
+    let tags = word.tags.map(t => {
+      return [
+        createElement("router-link", { attrs: {class: "tag", to: "/tag/" + t} }, `#${t}`),
+        createElement("span")
+      ]});
     
     let comments = word.comments.map(c => {
       return [
@@ -63,6 +70,7 @@ export default Vue.component('WordNode', Vue.extend({
         createElement("div", { attrs: {class: "container"} },  [
           header,
           renderSources(word.sources),
+          ...tags,
           ...comments,
           ...equals,
           ...related
@@ -73,5 +81,9 @@ export default Vue.component('WordNode', Vue.extend({
 </script>
 
 <style scoped>
-
+.tag {
+  color: grey;
+  text-align: left;
+  font-style: italic;
+}
 </style>
