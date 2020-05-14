@@ -1,9 +1,6 @@
 * add navigation links to every view
 * move LinkedList to util.ts
 * hideAdditionalDetails - store in localStorage
-* CommentComponent for WordTree nodes
-* Add Comments to RelationCommentsNode
-
 * use pug or something similar
 * each language has its own color
 

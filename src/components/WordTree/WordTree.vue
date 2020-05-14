@@ -2,7 +2,7 @@
 import Vue from "vue";
 
 import WordNode from "@/components/WordTree/WordNode";
-import RelationCommentsNode from "@/components/WordTree/RelationCommentsNode";
+import RelCommentsNode from "@/components/WordTree/RelCommentsNode";
 
 function LinkedList() {
   this.head = null;
@@ -34,7 +34,7 @@ export default Vue.extend({
   },
   components: {
     WordNode,
-    RelationCommentsNode,
+    RelCommentsNode,
   },
   render: function(createElement, context) {
     let word = context.props.word;
@@ -72,7 +72,7 @@ export default Vue.extend({
             createElement("li", [
               wordbox,
               createElement("ul", [
-                createElement("RelationCommentsNode", { attrs: { rel: node.value } }),
+                createElement("RelCommentsNode", { attrs: { rel: node.value } }),
               ]),
               nextbox
             ])
