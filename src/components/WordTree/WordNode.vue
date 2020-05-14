@@ -71,3 +71,7 @@ export default Vue.component('WordNode', Vue.extend({
   }
 }));
 </script>
+
+<style scoped>
+
+</style>

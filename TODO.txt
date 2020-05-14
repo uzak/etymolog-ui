@@ -4,7 +4,6 @@
     - Tags
 * add navigation links to every view
 * move LinkedList to util.ts
-* Styles from Word.vue belong to WordTree
 * hideAdditionalDetails - store in localStorage
 * CommentComponent for WordTree nodes
 * Add Comments to RelationCommentsNode

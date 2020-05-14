@@ -18,3 +18,9 @@ export default Vue.component('RelationCommentsNode', Vue.extend({
   },
 }));
 </script>
+
+<style scoped>
+.rel-comment {
+  white-space: nowrap;
+}
+</style>
