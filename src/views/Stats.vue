@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1>Stats</h1>
-    <div>Derived: {{stats.derived}}</div>
-    <div>Equals: {{stats.equals}}</div>
-    <div>Related: {{stats.related}}</div>
+    <div>Derived: {{derived}}</div>
+    <div>Equals: {{equals}}</div>
+    <div>Related: {{related}}</div>
   </div>
 </template>
 
@@ -12,11 +12,17 @@ import Model from '@/model'
 
 export default {
   name: 'Stats',
-  data() {
-    return {
-      "stats": Model.stats()
-    }    
-  }
+  computed: {
+    derived() {
+      return Array.from(Model.stats().derived.keys()).length
+    },
+    equals() {
+      return Array.from(Model.stats().equals.keys()).length
+    },
+    related() {
+      return Array.from(Model.stats().related.keys()).length
+    },
+  },
 }
 </script>
 

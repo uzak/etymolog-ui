@@ -23,9 +23,9 @@ class Model {
 
     public static stats() {
         return {
-            "derived": 1,
-            "equals": 1,
-            "related": 1,
+            "derived": Derived.Table,
+            "equals": Equals.Table,
+            "related": Related.Table,
             "tags": Tag.Table,
         }
     }
@@ -142,7 +142,7 @@ class Union {
     }
 }
 
-class Relationship extends Entity {
+abstract class Relationship extends Entity {
     public left: Word;
     public right: Word;
     
@@ -155,13 +155,14 @@ class Relationship extends Entity {
 }
 
 class Equals extends Relationship {
-    public static SYMBOL: string = "=";
-
+    public static Table: Array<Relationship> = new Array;
+    
     constructor(left: Word, right: Word, ...comments: Array<string>) {
         super(left, right);
 
         left.equals.push(this);
         right.equals.push(this);
+        Equals.Table.push(this);
     }
     
     public other(word: Word) {
@@ -170,68 +171,32 @@ class Equals extends Relationship {
 }
 
 class Derived extends Relationship {
-    public static SYMBOL: string = "->";
+    public static Table: Array<Relationship> = new Array;
 
     constructor(left: Word, right: Word, ...comments: Array<string>) {
         super(left, right);
 
         left.derives.push(this);
         right.derivedFrom.push(this);
+        Derived.Table.push(this);
     }
 }
 
 class Related extends Relationship {
-    public static SYMBOL: string = "~";
+    public static Table: Array<Relationship> = new Array;
 
     constructor(left: Word, right: Word, ...comments: Array<string>) {
         super(left, right);
 
         left.related.push(this);
         right.related.push(this);
+        Related.Table.push(this);
     }
 
     public other(word: Word) {
         return this.left === word ? this.right : this.left;
     }
 }
-
-
-/*
-let celtic = Language.get("celtic");
-let sa = Language.get("sa");
-let en = Language.get("sa");
-let semitic = Language.get("semitic");
-
-let belenus = new Word("belenus", celtic)
-let baal = new Word("Baal", semitic)
-let bhalu = new Word("bhalu", sa)
-
-let cathraige = new Word("cathraige", celtic)
-cathraige.comments.push("servant of the four")
-cathraige.comments.push("orginal name of Saint Patrick")
-
-let dubras = new Word("dubras", celtic)
-let waters = new Word("waters", en)
-let dvipa = new Word("dvipa", sa)
-let dvi = new Word("dvi", sa)
-let pa = new Word("pa", sa)
-
-new Union(dvipa, dvi, pa)
-
-// relationships
-//
-new Related(belenus, baal)
-new Derived(bhalu, belenus)
-
-new Equals(dubras, waters)
-new Derived(dvipa, belenus)
-
-
-// for (let word of celtic.words) {
-//     console.log(word.toString());
-//     console.log(word.equals);
-// }
-*/
 
 import * as data from '../public/db.json';
 
