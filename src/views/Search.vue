@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Search</h1>
-    <input v-model="searchStr" placeholder="search string"> 
+    <input v-model="searchStr" placeholder="search string" ref="search"> 
 
     <div v-if="!search()">
       Nothing found or your search string is shorter than 3 characters (minimum).
@@ -52,6 +52,9 @@ export default {
       return Model.allLanguages()
     }
   },
+  mounted() {
+    this.$refs.search.focus()
+  }
 }
 </script>
 

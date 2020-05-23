@@ -18,7 +18,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Model from "@/model";
-import WordTree from "@/components/WordTree/WordTree"
+import WordTree from "@/components/WordTree/WordTree.vue"
 
 export default Vue.extend({
   name: "Word",
