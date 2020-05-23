@@ -3,26 +3,8 @@ import Vue from "vue";
 
 import WordNode from "@/components/WordTree/WordNode";
 import RelCommentsNode from "@/components/WordTree/RelCommentsNode";
+import LinkedList from '@/util';
 
-function LinkedList() {
-  this.head = null;
-}
-
-LinkedList.prototype.push = function(val) {
-  var node = {
-    value: val,
-    next: null
-  };
-  if (!this.head) {
-    this.head = node;
-  } else {
-    let current = this.head;
-    while (current.next) {
-      current = current.next;
-    }
-    current.next = node;
-  }
-};
 
 export default Vue.extend({
   name: "WordTree",
@@ -95,7 +77,7 @@ export default Vue.extend({
       createElement("li", [
         //createElement("code", ["ॐ"]),
         createElement("code", ["*"]),
-        renderParent(ll.head) || renderWord(word)
+        renderParent(ll.head()) || renderWord(word)
       ])
     ]);
   }

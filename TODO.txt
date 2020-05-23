@@ -1,11 +1,10 @@
-* move LinkedList to util.ts
-* hideAdditionalDetails - store in localStorage
 * add navigation links to every view
-* add component for Links (`word.soures`)
-* link to wiktionary
-* use `inUnions` as well
 * a view for sources
+* hideAdditionalDetails - store in localStorage
+* add component for Links (`word.soures`)
+* use `inUnions` as well
 
+* link to wiktionary
 * use pug or something similar
 * each language has its own color
 
@@ -23,3 +22,4 @@
 * use UI version from git
 * deploy on github / publish
 * search view: on load jump automatically to the search box
+* move LinkedList to util.ts
