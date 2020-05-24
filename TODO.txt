@@ -1,5 +1,5 @@
-* add navigation links to every view
 * use `inUnions` as well
+* add navigation links to every view
 * hideAdditionalDetails - store in localStorage
 
 * link to wiktionary

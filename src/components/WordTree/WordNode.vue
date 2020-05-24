@@ -26,6 +26,26 @@ export default Vue.component('WordNode', Vue.extend({
       ])
     }
 
+    function renderUnions(word) {
+      if (word.unions.length) {
+        return createElement("span", [
+          " {",
+          ...word.unions.map(union => {
+            let i = 0;
+            return union.components.map(comp => {
+              let result = [];
+              result.push(createElement("router-link", { attrs: {to: "/word/" + comp.toString() }}, comp.toString(word.lang.name)))
+              if (++i < union.components.length) {
+                result.push(" + ")
+              }
+              return result;
+            });
+          }),
+          "}"
+        ]);
+      }
+    }
+
     function link(word) {
       return createElement("router-link", { attrs: { to: "/word/" + word.toString()}}, word.toString())
     }
@@ -62,9 +82,9 @@ export default Vue.component('WordNode', Vue.extend({
     if (context.props.selected) 
       attrs.class = "selected-word"
     
-    let header = createElement("span", {attrs: { class: "header" }}, [link(word)])
+    let header = createElement("span", {attrs: { class: "header" }}, [link(word), renderUnions(word)])
     if (selected) 
-      header = createElement("span", {attrs: { class: "header" }}, word.toString())
+      header = createElement("span", {attrs: { class: "header" }}, [word.toString(), renderUnions(word)])
     
     return createElement("code", { attrs: attrs}, [
         createElement("div", { attrs: {class: "container"} },  [
