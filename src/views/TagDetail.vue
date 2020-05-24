@@ -15,7 +15,7 @@ export default {
   computed: {
     words: function() {
       let name = this.$route.params.id;
-      return Model.stats().tags.get(name) || [];
+      return Model.tags.get(name) || [];
     }
   }
 }

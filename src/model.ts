@@ -23,14 +23,12 @@ class Model {
         return result
     }
 
-    public static stats() {
-        return {
-            "derived": Derived.Table,
-            "equals": Equals.Table,
-            "related": Related.Table,
-            "tags": Tag.Table,      // TODO this belongs somewhere else
-            "sources" : Source.Table // TODO same here
-        }
+    public static get tags() {
+        return Tag.Table;
+    }
+
+    public static get sources() {
+        return Source.Table;
     }
 }
 
@@ -62,7 +60,7 @@ class Source {
     }
 
     get words(): Array<Word> {
-        return filter(this._entities, e => e instanceof Word);
+        return filter(this._entities, e => e instanceof Word) as Array<Word>;
     }
 
     public isLink() {
@@ -116,7 +114,7 @@ class Entity {
                 Source.Table.set(s, source);
             }
             Source.Table.get(s)?.entities.push(this);
-            this._sources.push(Source.Table.get(s))
+            this._sources.push(Source.Table.get(s) as Source)
         });
     }
     

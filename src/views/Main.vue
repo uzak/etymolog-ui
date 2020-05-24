@@ -5,7 +5,6 @@
     <div><router-link to="/dictionaries">dictionaries</router-link></div>
     <div><router-link to="/sources">sources</router-link></div>
     <div><router-link to="/tags">tags</router-link></div>
-    <div><router-link to="/stats">stats</router-link></div>
   </div>
 </template>
 

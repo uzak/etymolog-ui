@@ -19,7 +19,6 @@ export default Vue.component('WordNode', Vue.extend({
 
     function renderSources(sources) {
       let i = 0
-      console.log(sources);
       return createElement("span", {attrs: {class: "source"}}, [
         sources.map(src => {
           return createElement("router-link", { attrs: {to: "/source/" + src.link }}, `[${++i}]`)

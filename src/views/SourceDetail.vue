@@ -17,7 +17,7 @@ export default {
   computed: {
     source: function() {
       let name = this.$route.params.id;
-      return Model.stats().sources.get(name);
+      return Model.sources.get(name);
     },
     words: function() {
       let result = sortBy(this.source.words, s => s.value.toLowerCase()); 

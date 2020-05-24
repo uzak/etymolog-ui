@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     sources() {
-      return Array.from(Model.stats().sources.values());
+      return Array.from(Model.sources.values());
     },
     traditional() {
       let result = filter(this.sources, s => !s.isLink());

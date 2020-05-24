@@ -19,16 +19,16 @@ export default {
   name: 'Tags',
   methods: {
     words_for_tag(tag) {
-      let words = Model.stats().tags.get(tag);
+      let words = this.tags.get(tag);
       return words ? words.length : 0;
     },
   },
   computed: {
     tags() {
-      return Model.stats().tags;
+      return Model.tags;
     },
     len() {
-      return Array.from(Model.stats().tags.keys()).length;
+      return Array.from(this.tags).length;
     }
   }
 }

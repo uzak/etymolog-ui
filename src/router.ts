@@ -9,7 +9,6 @@ import Tags from './views/Tags.vue'
 import Sources from './views/Sources.vue'
 import SourceDetail from './views/SourceDetail.vue'
 import Search from './views/Search.vue'
-import Stats from './views/Stats.vue'
 
 Vue.use(Router)
 
@@ -58,12 +57,7 @@ export default new Router({
     {
       path: '/search',
       name: 'search',
-      component: Search
-    },
-    {
-      path: '/stats',
-      name: 'stats',
-      component: Stats
-    },
+      component: Search,
+    }
   ]
 })
