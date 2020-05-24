@@ -6,6 +6,8 @@ import DictionaryDetail from './views/DictionaryDetail.vue'
 import Word from './views/Word.vue'
 import TagDetail from './views/TagDetail.vue'
 import Tags from './views/Tags.vue'
+import Sources from './views/Sources.vue'
+import SourceDetail from './views/SourceDetail.vue'
 import Search from './views/Search.vue'
 import Stats from './views/Stats.vue'
 
@@ -42,6 +44,16 @@ export default new Router({
       path: '/tags',
       name: 'tags',
       component: Tags
+    },
+    {
+      path: '/sources',
+      name: 'sources',
+      component: Sources
+    },
+    {
+      path: '/source/:id',
+      name: 'source',
+      component: SourceDetail
     },
     {
       path: '/search',

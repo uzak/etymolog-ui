@@ -2,6 +2,8 @@
 //
 // load tags
 
+import { filter } from 'lodash';
+
 class Model {
     public static Version: Number;
 
@@ -26,13 +28,47 @@ class Model {
             "derived": Derived.Table,
             "equals": Equals.Table,
             "related": Related.Table,
-            "tags": Tag.Table,
+            "tags": Tag.Table,      // TODO this belongs somewhere else
+            "sources" : Source.Table // TODO same here
         }
     }
 }
 
+// XXX common parent for Source and Tag?
 class Tag {
     public static Table: Map<string, Array<Word>> = new Map();
+}
+
+class Source {
+    public static Table: Map<string, Source> = new Map(); 
+
+    private _value: string;
+    private _entities: Array<Entity> = new Array();
+
+    constructor(value: string) {
+        this._value = value;
+    }
+    
+    get value(): string {
+        return this._value;
+    }
+
+    get entities(): Array<Entity> {
+        return this._entities;
+    }
+
+    get link(): string {
+        return encodeURIComponent(this.value);
+    }
+
+    get words(): Array<Word> {
+        return filter(this._entities, e => e instanceof Word);
+    }
+
+    public isLink() {
+        let v = this._value.toLowerCase();
+        return v.startsWith("http") || v.startsWith("www")
+    }
 }
 
 class Language {
@@ -70,7 +106,23 @@ class Language {
 
 class Entity {
     public comments: Array<string> = [];
-    public sources:  Array<string> = [];
+    protected _sources:  Array<Source> = [];
+    
+    set sources(sources: Array<string>) { 
+        sources.map(s => {
+            // XXX move maybe this logic to source?
+            if (!Source.Table.has(s)) {
+                let source = new Source(s);
+                Source.Table.set(s, source);
+            }
+            Source.Table.get(s)?.entities.push(this);
+            this._sources.push(Source.Table.get(s))
+        });
+    }
+    
+    public getSources(): Array<Source> {
+        return this._sources;
+    }
 }
 
 class Word extends Entity {
@@ -94,7 +146,7 @@ class Word extends Entity {
         Array.prototype.push.apply(this.comments, comments);
     }
 
-    public setTags(tags: Array<string>) {
+    public setTags(tags: Array<string>) { // TODO change to TS syntax
         this.tags = tags;
         tags.map(t => {
             if (!Tag.Table.has(t)) {
@@ -105,8 +157,9 @@ class Word extends Entity {
     }
 
     public toString(lang: string) {
-        if (lang === this.lang.name) 
+        if (lang === this.lang.name) {
             return this.value;
+        }
 
         return `${this.lang.name}:${this.value}`;
     }

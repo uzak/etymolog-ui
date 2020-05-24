@@ -77,7 +77,7 @@ export default Vue.extend({
       createElement("li", [
         //createElement("code", ["ॐ"]),
         createElement("code", ["*"]),
-        renderParent(ll.head()) || renderWord(word)
+        renderParent(ll.head) || renderWord(word)
       ])
     ]);
   }

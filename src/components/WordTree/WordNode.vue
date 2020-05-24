@@ -19,9 +19,10 @@ export default Vue.component('WordNode', Vue.extend({
 
     function renderSources(sources) {
       let i = 0
+      console.log(sources);
       return createElement("span", {attrs: {class: "source"}}, [
         sources.map(src => {
-          return createElement("a", { attrs: {href: src.toString() }}, `[${++i}]`)
+          return createElement("router-link", { attrs: {to: "/source/" + src.link }}, `[${++i}]`)
         })
       ])
     }
@@ -48,14 +49,14 @@ export default Vue.component('WordNode', Vue.extend({
       let other = r.other(word)
       return [
         createElement("span", ["= ", link(other)]),
-        renderSources(other.sources)
+        renderSources(other.getSources())
       ]});
 
     let related = word.related.map(r => {
       let other = r.other(word)
       return [
         createElement("span", ["~ ", link(other)]),
-        renderSources(other.sources)
+        renderSources(other.getSources())
       ]});
 
     let attrs = {}
@@ -69,7 +70,7 @@ export default Vue.component('WordNode', Vue.extend({
     return createElement("code", { attrs: attrs}, [
         createElement("div", { attrs: {class: "container"} },  [
           header,
-          renderSources(word.sources),
+          renderSources(word.getSources()),
           ...tags,
           ...comments,
           ...equals,

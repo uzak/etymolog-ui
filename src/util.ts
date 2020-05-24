@@ -6,7 +6,7 @@ class LinkedList {
       this._head = null;
     }
 
-    public head() {
+    get head(): any {
         return this._head;
     }
 

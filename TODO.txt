@@ -1,8 +1,7 @@
+* remove stats
 * add navigation links to every view
-* a view for sources
-* hideAdditionalDetails - store in localStorage
-* add component for Links (`word.soures`)
 * use `inUnions` as well
+* hideAdditionalDetails - store in localStorage
 
 * link to wiktionary
 * use pug or something similar
@@ -23,3 +22,5 @@
 * deploy on github / publish
 * search view: on load jump automatically to the search box
 * move LinkedList to util.ts
+* a view for sources
+* add component for Links (`word.soures`) -> now
