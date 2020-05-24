@@ -11,11 +11,16 @@ export default Vue.component('WordNode', Vue.extend({
     selected: {
       type: Boolean,
       default: false
+    },
+    inUnion: {
+      type: Boolean,
+      default: false
     }
   },
   render: function(createElement, context) {
     let word = context.props.word
     let selected = context.props.selected
+    let inUnion = context.props.inUnion
 
     function renderSources(sources) {
       let i = 0
@@ -79,8 +84,13 @@ export default Vue.component('WordNode', Vue.extend({
       ]});
 
     let attrs = {}
-    if (context.props.selected) 
-      attrs.class = "selected-word"
+    attrs.class = ""
+    if (selected) 
+      attrs.class += " selected-word"
+    if (inUnion)
+      attrs.class += " in-union"
+
+
     
     let header = createElement("span", {attrs: { class: "header" }}, [link(word), renderUnions(word)])
     if (selected) 
@@ -100,7 +110,15 @@ export default Vue.component('WordNode', Vue.extend({
 }));
 </script>
 
-<style scoped>
+<style>
+.selected-word {
+  background-color: lightgoldenrodyellow;
+}
+
+.in-union {
+  background-color: lightpink;
+}
+
 .tag {
   color: grey;
   text-align: left;

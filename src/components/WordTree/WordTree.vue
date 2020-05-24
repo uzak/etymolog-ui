@@ -28,14 +28,19 @@ export default Vue.extend({
               createElement("WordNode", { attrs: { word: rel.right } }),
               rel.right.derives.length ? renderChildren(rel.right) : null
             ]);
-        })
+        }),
+        word.inUnions.map(union => {
+            return createElement("li", [
+              createElement("WordNode", { attrs: { word: union.word, inUnion: true } })
+            ]);
+        }),
       ]);
     }
 
     function renderWord(word) {
       return createElement("ul", [
         createElement("WordNode", { attrs: { word: word, selected: true } }),
-        word.derives.length ? renderChildren(word) : null
+        word.derives.length || word.inUnions.length ? renderChildren(word) : null, // XXX introdcuce method for condition
       ]);
     }
 
@@ -119,10 +124,6 @@ div.container {
 
 .tree code a {
   text-decoration: none;
-}
-
-.selected-word {
-  background-color: lightgoldenrodyellow;
 }
 
 .comment {
