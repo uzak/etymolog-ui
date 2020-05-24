@@ -11,10 +11,10 @@ class Model {
         return Language.get(name);
     }
     
-    public static get_word(str: string): Word {
+    public static get_word(str: string, add: boolean = true): Word|undefined {
         let [lang_str, value] = str.split(":")
         let lang = Language.get(lang_str)
-        return lang.get_word(value)
+        return lang.get_word(value, add)
     }
 
     public static allLanguages(): Array<Language> {
@@ -88,9 +88,9 @@ class Language {
         return obj;
     }
     
-    public get_word(value: string): Word {
+    public get_word(value: string, add: boolean = true): Word|undefined {
         let result = this.words.get(value);
-        if (!result) {
+        if (!result && add) {
             result = new Word(value, this);
             this.words.set(value, result);
         }
@@ -262,8 +262,8 @@ for (const word of data.words) {
 Object.entries(data.relationships).forEach(
     ([relCls, rels]) => {
         rels.forEach(rel => {
-            let left = Model.get_word(rel.left);
-            let right = Model.get_word(rel.right);
+            let left = Model.get_word(rel.left)!;
+            let right = Model.get_word(rel.right)!;
             let relationship;
             switch (relCls) {
                 case "equals":
@@ -288,7 +288,7 @@ Object.entries(data.relationships).forEach(
 );
     
 for (const union of data.unions) {
-    new Union(Model.get_word(union.word), ...union.components.map(x => Model.get_word(x)))
+    new Union(Model.get_word(union.word)!, ...union.components.map(x => Model.get_word(x)!))
 }
 
 Model.Version = data.version;

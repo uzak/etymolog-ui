@@ -24,3 +24,4 @@
 * add component for Links (`word.soures`) -> no, not ATM
 * remove stats
 * use `inUnions` as well
+* non-existing word - error
