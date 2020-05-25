@@ -33,18 +33,23 @@ export default Vue.component('WordNode', Vue.extend({
 
     function renderUnions(word) {
       if (word.unions.length) {
+        let u_counter = 0;
         return createElement("span", [
           " {",
           ...word.unions.map(union => {
-            let i = 0;
-            return union.components.map(comp => {
+            let c_counter = 0;
+            let components = union.components.map(comp => {
               let result = [];
               result.push(createElement("router-link", { attrs: {to: "/word/" + comp.toString() }}, comp.toString(word.lang.name)))
-              if (++i < union.components.length) {
+              if (++c_counter < union.components.length) {
                 result.push(" + ")
               }
               return result;
             });
+            if (++u_counter <word.unions.length) {
+              components.push(", ")
+            }
+            return components;
           }),
           "}"
         ]);
