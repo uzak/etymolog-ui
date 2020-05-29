@@ -3,7 +3,7 @@
     <h1>Language: {{ lang }}</h1>
 
     <div>
-      <input v-model="hideAdditionalInfo" type="checkbox" id="hideAdditionalInfo">
+      <input v-model="hideAdditionalInfo" type="checkbox" id="hideAdditionalInfo" @change="saveAdditionalInfo">
       <label for="hideAdditionalInfo">Hide additional info</label>
     </div>
     <div>
@@ -80,7 +80,9 @@ export default Vue.extend({
   name: 'DictionaryDetail',
   data() {
     return {
-      hideAdditionalInfo: this.$route.query.hideAdditionalInfo !== undefined
+      hideAdditionalInfo: this.$route.query.hideAdditionalInfo !== undefined 
+        ? true 
+        : eval(localStorage.hideAdditionalInfo)
     }
   },
   computed: {
@@ -90,6 +92,9 @@ export default Vue.extend({
     Derived,
   },
   methods: {
+    saveAdditionalInfo() {
+      localStorage.hideAdditionalInfo = this.hideAdditionalInfo;
+    },
     words() {
       let lang = Model.get_lang(this.$route.params.id);
       let result = Array.from(lang.words.values());

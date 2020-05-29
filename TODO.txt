@@ -1,7 +1,5 @@
-* hideAdditionalDetails - store in localStorage
 * add navigation links to every view
 * link to wiktionary
-* BUG: composed unions: http://localhost:8000/#/word/sa:dvi
 * Sources: missing words without sources
 
 
@@ -29,3 +27,4 @@
 * remove stats
 * use `inUnions` as well
 * non-existing word - error
+* hideAdditionalDetails - store in localStorage
