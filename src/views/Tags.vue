@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Tags</h1>
+    <Header>Tags</Header>
     <div>
       Tags ({{ len }}): 
       <ul>
@@ -14,6 +14,7 @@
 
 <script>
 import Model from '@/model'
+import Header from '@/components/Header'
 
 export default {
   name: 'Tags',
@@ -30,6 +31,9 @@ export default {
     len() {
       return Array.from(this.tags).length;
     }
+  },
+  components: {
+    Header
   }
 }
 </script>

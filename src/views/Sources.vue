@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Sources</h1>
+    <Header>Search</Header>
+
     <h2>Traditional</h2>
       <ul>
         <li v-for="src in traditional" :key=src.value>
@@ -19,9 +20,13 @@
 <script>
 import Model from '@/model'
 import { filter, sortBy } from 'lodash'
+import Header from '@/components/Header'
 
 export default {
   name: 'Tags',
+  components: {
+    Header
+  },
   methods: {
   },
   computed: {

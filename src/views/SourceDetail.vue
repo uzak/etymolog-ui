@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1 v-if="source.isLink()">Source: <a target="_blank" :href=source.value>{{source.value}}</a></h1>
-    <h1 v-else>Source: {{source.value}}</h1>
+    <Header :back="[{'/sources': 'sources'}]">
+      <span v-if="source.isLink()">Source: <a target="_blank" :href=source.value>{{source.value}}</a></span>
+      <span v-else>Source: {{source.value}}</span>
+    </Header>
     <div v-for="word in words" :key="word.toString()">
       <router-link :to="'/word/' + word.toString()">{{word.toString()}}</router-link>
     </div>
@@ -10,6 +12,7 @@
 
 <script>
 import Model from '@/model'
+import Header from '@/components/Header'
 import { sortBy } from 'lodash';
 
 export default {
@@ -23,6 +26,9 @@ export default {
       let result = sortBy(this.source.words, s => s.value.toLowerCase()); 
       return result;
     }
+  },
+  components: {
+    Header
   }
 }
 </script>

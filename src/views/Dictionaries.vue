@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Dictionaries</h1>
+    <Header>Dictionaries</Header>
+    
     <table>
       <tr>
         <th>Language</th>
@@ -20,9 +21,13 @@
 
 <script>
 import Model from '@/model'
+import Header from '@/components/Header'
 
 export default {
   name: 'Dictionaries',
+  components: {
+    Header
+  },
   computed: {
     languages: function() { 
       return Model.allLanguages()

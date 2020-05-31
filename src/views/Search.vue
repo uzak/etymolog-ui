@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Search</h1>
+    <Header>Search</Header>
+
     <input v-model="searchStr" placeholder="search string" ref="search"> 
 
     <div v-if="!search()">
@@ -20,9 +21,13 @@
 
 <script>
 import Model from '@/model'
+import Header from '@/components/Header'
 
 export default {
   name: 'Search',
+  components: {
+    Header
+  },
   data() {
     return {
       searchStr: ""

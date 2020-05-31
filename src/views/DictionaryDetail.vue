@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Language: {{ lang }}</h1>
+    <Header :back="[{'/dictionaries': 'dictionaries'}]">Language: {{ lang }}</Header>
 
     <div>
       <input v-model="hideAdditionalInfo" type="checkbox" id="hideAdditionalInfo" @change="saveAdditionalInfo">
@@ -58,6 +58,7 @@
 <script>
 import Vue from 'vue'
 import Model from '@/model'
+import Header from '@/components/Header'
 
 let Derived = Vue.extend({
   name: 'Derived',
@@ -90,6 +91,7 @@ export default Vue.extend({
   },
   components: {
     Derived,
+    Header,
   },
   methods: {
     saveAdditionalInfo() {

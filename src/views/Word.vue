@@ -1,23 +1,21 @@
 <template>
   <div>
     <div v-if="word">
-      <h1>{{ word }}</h1>
-      <p>
-      back to <router-link to="/">etymolog</router-link> / <router-link :to="'/dictionaries/' + word.lang.name">{{word.lang.name}}</router-link> language
-      </p>
+      <Header :back="[{'/dictionaries': 'dictionaries'}, langBackDict()]">{{ word }}</Header>
 
       <WordTree :word="word"/>
     </div>
     <div v-else>
-      <h1>{{ $route.params.id}} not found</h1>
+      <Header>{{ $route.params.id}} not found</Header>
     </div>
 
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Model from "@/model";
+import Vue from "vue"
+import Model from "@/model"
+import Header from "@/components/Header.vue"
 import WordTree from "@/components/WordTree/WordTree.vue"
 
 export default Vue.extend({
@@ -30,8 +28,15 @@ export default Vue.extend({
       return Model.get_word(this.$route.params.id, false);
     },
   },
+  methods: {
+    langBackDict: function() {
+      let name = this.word.lang.name;
+      return {["/dictionaries/"+name]: name}
+    }
+  },
   components: {
-    "WordTree": WordTree,
+    WordTree,
+    Header,
   }
 });
 </script>
