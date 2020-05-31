@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-if="word">
-      <Header :back="[{'/dictionaries': 'dictionaries'}, langBackDict()]">{{ word }}</Header>
+    <div v-if="word()">
+      <Header :back="[{'/dictionaries': 'dictionaries'}, langBackDict()]">{{ word() }}</Header>
 
-      <WordTree :word="word"/>
+      <WordTree :word="word()"/>
     </div>
     <div v-else>
       <Header>{{ $route.params.id}} not found</Header>
@@ -21,13 +21,14 @@ import WordTree from "@/components/WordTree/WordTree.vue"
 export default Vue.extend({
   name: "Word",
   data() {
-    return {
-      word: Model.get_word(this.$route.params.id, false)
-    };
+    return {}
   },
   methods: {
+    word: function() {
+      return Model.get_word(this.$route.params.id, false)
+    },
     langBackDict: function() {
-      let name = this.$data.word.lang.name;
+      let name = this.word()!.lang.name;
       return {["/dictionaries/"+name]: name}
     }
   },
