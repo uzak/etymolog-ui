@@ -21,16 +21,13 @@ import WordTree from "@/components/WordTree/WordTree.vue"
 export default Vue.extend({
   name: "Word",
   data() {
-    return {};
-  },
-  computed: {
-    word: function() {
-      return Model.get_word(this.$route.params.id, false);
-    },
+    return {
+      word: Model.get_word(this.$route.params.id, false)
+    };
   },
   methods: {
     langBackDict: function() {
-      let name = this.word.lang.name;
+      let name = this.$data.word.lang.name;
       return {["/dictionaries/"+name]: name}
     }
   },

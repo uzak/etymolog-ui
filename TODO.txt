@@ -1,5 +1,5 @@
 * link to wiktionary
-* Sources: missing words without sources
+* Sources: missing words without sources?
 
 * use pug or something similar
 * each language has its own color
