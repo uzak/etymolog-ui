@@ -84,7 +84,7 @@ export default Vue.component('WordNode', Vue.extend({
     let related = word.related.map(r => {
       let other = r.other(word)
       return [
-        createElement("span", ["~ ", link(other)]),
+        createElement("span", { attrs: {class: "related"}}, ["~ ", link(other)]),
         renderSources(other.getSources())
       ]});
 
@@ -128,5 +128,9 @@ export default Vue.component('WordNode', Vue.extend({
   color: grey;
   text-align: left;
   font-style: italic;
+}
+
+.related {
+  background-color: khaki; /*gold is nice too */
 }
 </style>
