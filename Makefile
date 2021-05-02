@@ -5,7 +5,7 @@
 
 .PHONY: serve update-version build
 
-DEPLOY_DIR=../uzak.github.io/etymolog
+DEPLOY_DIR	?=	../uzak.github.io/etymolog
  
 serve: update-version
 	yarn serve --port 8000

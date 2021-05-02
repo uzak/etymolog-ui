@@ -1,5 +1,9 @@
 * link to wiktionary
 * Sources: missing words without sources?
+* sources: same numbering should be kept for the sources within a page:
+    https://uzak.github.io/etymolog/#/word/lat:caelum
+  and sources could be enumerated at the bottom of the `word` page
+    
 
 * use pug or something similar
 * each language has its own color

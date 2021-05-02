@@ -80,8 +80,8 @@ export default Vue.extend({
 
     return createElement("ul", { attrs: { class: "tree" } }, [
       createElement("li", [
-        //createElement("code", ["ॐ"]),
-        createElement("code", ["*"]),
+        createElement("code", ["ॐ"]),
+        //createElement("code", ["*"]),
         renderParent(ll.head) || renderWord(word)
       ])
     ]);
