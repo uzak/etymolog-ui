@@ -164,8 +164,10 @@ class Word extends Entity {
 
     private _derivedChain(result: Array<Relationship>) {
       for (let w of this.derivedFrom) {
-        result.push(w)
-        w.left._derivedChain(result)
+          if (!result.includes(w)) {        // prevent infinite recursion
+            result.push(w)
+            w.left._derivedChain(result)
+          }
       }
     }
     
