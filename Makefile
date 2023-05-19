@@ -14,6 +14,7 @@ serve: update-version
 update-version:
 	$(YARN) version --new-version 0.1.`git rev-list --count HEAD` --no-git-tag-version
 
+build: export NODE_OPTIONS="--openssl-legacy-provider"
 build:
 	$(YARN) run build
 	rm -rvf ${DEPLOY_DIR}
