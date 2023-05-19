@@ -25,6 +25,5 @@ export default Vue.extend({
   color: #2c3e50;
   max-width: 800px;
   margin-top: 60px;
-  
 }
 </style>

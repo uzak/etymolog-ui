@@ -152,6 +152,7 @@ body {
 .tree {
   margin: 0 0 1em;
   text-align: center;
+  font-size: 9pt;
 }
 .tree,
 .tree ul {
