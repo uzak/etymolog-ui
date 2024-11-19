@@ -1,3 +1,4 @@
+* v word-view have all the languages and they can be disabled (words will be hidden) on the flight
 * horizontal tree
 * link to wiktionary
 * Sources: missing words without sources?
