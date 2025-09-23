@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn --version)",
+      "Bash(yarn install)",
+      "Bash(gh api:*)",
+      "Bash(yarn audit)",
+      "Bash(yarn npm:*)",
+      "Bash(yarn add:*)",
+      "Bash(yarn remove:*)",
+      "Bash(yarn info:*)",
+      "Bash(yarn build)",
+      "Bash(gh repo view:*)",
+      "Bash(yarn why:*)",
+      "Bash(yarn list:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

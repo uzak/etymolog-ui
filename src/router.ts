@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Main from './views/Main.vue'
 import Dictionaries from './views/Dictionaries.vue'
 import DictionaryDetail from './views/DictionaryDetail.vue'
@@ -10,9 +9,8 @@ import Sources from './views/Sources.vue'
 import SourceDetail from './views/SourceDetail.vue'
 import Search from './views/Search.vue'
 
-Vue.use(Router)
-
-export default new Router({
+export default createRouter({
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
