@@ -12,7 +12,7 @@ serve: update-version
 	$(YARN) serve --port 8000
 
 update-version:
-	$(YARN) version --new-version 0.1.`git rev-list --count HEAD` --no-git-tag-version
+	sed -i 's/"version": "[^"]*"/"version": "0.1.'`git rev-list --count HEAD`'"/' package.json
 
 build: export NODE_OPTIONS="--openssl-legacy-provider"
 build:

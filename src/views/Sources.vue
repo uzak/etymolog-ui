@@ -17,13 +17,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Model from '@/model'
 import { filter, sortBy } from 'lodash'
-import Header from '@/components/Header'
+import Header from '@/components/Header.vue'
 
-export default {
-  name: 'Tags',
+export default defineComponent({
+  name: 'Sources',
   components: {
     Header
   },
@@ -41,13 +42,13 @@ export default {
     links() {
       let result = filter(this.sources, s => s.isLink());
       result = sortBy(result, s => {
-        let match = s.value.match(/\/\/(.*)/i); 
+        let match = s.value.match(/\/\/(.*)/i);
         return match ? match[1].toLowerCase() : s.value.toLowerCase()
-       }); 
+       });
       return result;
     }
   }
-}
+})
 </script>
 
 <style scoped>

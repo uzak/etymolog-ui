@@ -8,11 +8,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'Main'
-}
+})
 </script>
 
 <style scoped>

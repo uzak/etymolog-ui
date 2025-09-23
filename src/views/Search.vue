@@ -19,11 +19,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Model from '@/model'
-import Header from '@/components/Header'
+import Header from '@/components/Header.vue'
 
-export default {
+export default defineComponent({
   name: 'Search',
   components: {
     Header
@@ -37,8 +38,8 @@ export default {
     search() {
       let input = this.$data.searchStr.toLowerCase()
       if (input.length < 3)
-        return 
-      
+        return
+
       let result = []
       for (let lang of Model.allLanguages().values()) {
         let result_lang = []
@@ -53,14 +54,14 @@ export default {
     }
   },
   computed: {
-    languages: function() { 
+    languages: function() {
       return Model.allLanguages()
     }
   },
   mounted() {
-    this.$refs.search.focus()
+    (this.$refs.search as HTMLInputElement)?.focus()
   }
-}
+})
 </script>
 
 <style scoped>

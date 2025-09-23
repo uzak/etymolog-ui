@@ -1,14 +1,13 @@
 <script>
-import Vue from "vue";
+import { h } from "vue";
 
 import WordNode from "@/components/WordTree/WordNode";
 import RelCommentsNode from "@/components/WordTree/RelCommentsNode";
 import LinkedList from '@/util';
 
 
-export default Vue.extend({
+export default {
   name: "WordTree",
-  functional: true,
   props: {
     word: {
       required: true
@@ -18,20 +17,21 @@ export default Vue.extend({
     WordNode,
     RelCommentsNode,
   },
-  render: function(createElement, context) {
-    let word = context.props.word;
+  render() {
+    const createElement = h;
+    let word = this.word;
 
     function renderChildren(word) {
       return createElement("ul", [
         word.derives.map(rel => {
             return createElement("li", [
-              createElement("WordNode", { attrs: { word: rel.right } }),
+              createElement(WordNode, { word: rel.right }),
               rel.right.derives.length ? renderChildren(rel.right) : null
             ]);
         }),
         word.inUnions.map(union => {
             return createElement("li", [
-              createElement("WordNode", { attrs: { word: union.word, inUnion: true } })
+              createElement(WordNode, { word: union.word, inUnion: true })
             ]);
         }),
       ]);
@@ -39,15 +39,15 @@ export default Vue.extend({
 
     function renderWord(word) {
       return createElement("ul", [
-        createElement("WordNode", { attrs: { word: word, selected: true } }),
+        createElement(WordNode, { word: word, selected: true }),
         word.derives.length || word.inUnions.length ? renderChildren(word) : null, // XXX introdcuce method for condition
       ]);
     }
 
     function renderParent(node) {
       if (node) {
-        let wordbox = createElement("WordNode", {
-          attrs: { word: node.value.left }
+        let wordbox = createElement(WordNode, {
+          word: node.value.left
         });
         let nextbox = renderParent(node.next);
         if (nextbox == null) {
@@ -59,7 +59,7 @@ export default Vue.extend({
             createElement("li", [
               wordbox,
               createElement("ul", [
-                createElement("RelCommentsNode", { attrs: { rel: node.value } }),
+                createElement(RelCommentsNode, { rel: node.value }),
               ]),
               nextbox
             ])
@@ -78,7 +78,7 @@ export default Vue.extend({
         ll.push(p);
       });
 
-    return createElement("ul", { attrs: { class: "tree" } }, [
+    return createElement("ul", { class: "tree" }, [
       createElement("li", [
         createElement("code", ["ॐ"]),
         //createElement("code", ["*"]),
@@ -86,7 +86,7 @@ export default Vue.extend({
       ])
     ]);
   }
-});
+};
 </script>
 
 

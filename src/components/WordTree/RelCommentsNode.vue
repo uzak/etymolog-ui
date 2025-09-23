@@ -1,22 +1,21 @@
 <script>
-import Vue from "vue";
-
-export default Vue.component('RelCommentsNode', Vue.extend({
+export default {
+  name: 'RelCommentsNode',
   functional: true,
   props: {
     rel: {
       required: true
     }
   },
-  render: function(createElement, context) {
+  render(createElement, context) {
     let rel = context.props.rel;
     return createElement("code", [
-        rel.comments.map(c => {
-          return createElement("div", {attrs: { class: "rel-comment comment" }}, c)
-        })
+      rel.comments.map(c => {
+        return createElement("div", {attrs: { class: "rel-comment comment" }}, c);
+      })
     ]);
-  },
-}));
+  }
+};
 </script>
 
 <style scoped>

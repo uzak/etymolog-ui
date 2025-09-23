@@ -10,27 +10,28 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Model from '@/model'
-import Header from '@/components/Header'
+import Header from '@/components/Header.vue'
 import { sortBy } from 'lodash';
 
-export default {
+export default defineComponent({
   name: 'SourceDetail',
   computed: {
     source: function() {
-      let name = this.$route.params.id;
+      let name = this.$route.params.id as string;
       return Model.sources.get(name);
     },
     words: function() {
-      let result = sortBy(this.source.words, s => s.value.toLowerCase()); 
+      let result = sortBy(this.source?.words || [], s => s.value.toLowerCase());
       return result;
     }
   },
   components: {
     Header
   }
-}
+})
 </script>
 
 <style scoped>

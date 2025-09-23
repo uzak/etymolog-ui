@@ -55,35 +55,34 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script lang="ts">
+import { defineComponent, h } from 'vue'
 import Model from '@/model'
-import Header from '@/components/Header'
+import Header from '@/components/Header.vue'
 
-let Derived = Vue.extend({
+const Derived = defineComponent({
   name: 'Derived',
-  functional: true, // preto nie je this...
   props: ['word'],
-  render: function(createElement, context) {
+  render() {
     let count = 0
-    let result = context.props.word.derivedChain()
-    return createElement('div', result.map(item => {
+    let result = this.word.derivedChain()
+    return h('div', result.map((item: any) => {
       let symbol = count++ < result.length ? " -> ": "";
       return [
         symbol,
-        createElement('router-link', { props: { 'to' : '/word/'+ item.left.toString() }}, item.left.toString())
+        h('router-link', { to: '/word/'+ item.left.toString() }, item.left.toString())
       ]
     }));
   }
 });
 
-export default Vue.extend({
+export default defineComponent({
   name: 'DictionaryDetail',
   data() {
     return {
-      hideAdditionalInfo: this.$route.query.hideAdditionalInfo !== undefined 
-        ? true 
-        : eval(localStorage.hideAdditionalInfo)
+      hideAdditionalInfo: this.$route.query.hideAdditionalInfo !== undefined
+        ? true
+        : Boolean(localStorage.hideAdditionalInfo === 'true')
     }
   },
   computed: {
@@ -98,29 +97,28 @@ export default Vue.extend({
       localStorage.hideAdditionalInfo = this.hideAdditionalInfo;
     },
     words() {
-      let lang = Model.get_lang(this.$route.params.id);
+      let lang = Model.get_lang(this.$route.params.id as string);
       let result = Array.from(lang.words.values());
       result.sort((a, b) => a.value.localeCompare(b.value))
       return result;
     },
-    related(word) {
-      return word.related.map(r => r.other(word));
+    related(word: any) {
+      return word.related.map((r: any) => r.other(word));
     },
-    equals(word) {
-      return word.equals.map(r => r.other(word));
+    equals(word: any) {
+      return word.equals.map((r: any) => r.other(word));
     },
-    derived(word) {
-      return word.derivedFrom.map(r => r.left);
+    derived(word: any) {
+      return word.derivedFrom.map((r: any) => r.left);
     },
-    comments(word) {
+    comments(word: any) {
       return word.comments;
     },
-    unions(word) {
-      return word.unions.map(x => x.components);
+    unions(word: any) {
+      return word.unions.map((x: any) => x.components);
     }
   }
 });
-
 </script>
 
 <style scoped>

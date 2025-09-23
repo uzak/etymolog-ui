@@ -19,21 +19,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Model from '@/model'
-import Header from '@/components/Header'
+import Header from '@/components/Header.vue'
 
-export default {
+export default defineComponent({
   name: 'Dictionaries',
   components: {
     Header
   },
   computed: {
-    languages: function() { 
+    languages: function() {
       return Model.allLanguages()
     }
   },
-}
+})
 </script>
 
 <style scoped>

@@ -23,18 +23,20 @@ export default defineComponent({
   name: "Word",
   setup() {
     const route = useRoute()
-    return { route }
-  },
-  data() {
-    return {}
-  },
-  methods: {
-    word: function() {
-      return Model.get_word(this.route.params.id as string, false)
-    },
-    langBackDict: function() {
-      let name = this.word()!.lang.name;
-      return {["/dictionaries/"+name]: name}
+
+    const word = () => {
+      return Model.get_word(route.params.id as string, false)
+    }
+
+    const langBackDict = () => {
+      const name = word()?.lang.name
+      return name ? {["/dictionaries/"+name]: name} : {}
+    }
+
+    return {
+      route,
+      word,
+      langBackDict
     }
   },
   components: {

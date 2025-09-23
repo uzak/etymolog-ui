@@ -12,14 +12,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Model from '@/model'
-import Header from '@/components/Header'
+import Header from '@/components/Header.vue'
 
-export default {
+export default defineComponent({
   name: 'Tags',
   methods: {
-    words_for_tag(tag) {
+    words_for_tag(tag: string) {
       let words = this.tags.get(tag);
       return words ? words.length : 0;
     },
@@ -35,7 +36,7 @@ export default {
   components: {
     Header
   }
-}
+})
 </script>
 
 <style scoped>
