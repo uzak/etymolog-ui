@@ -26,12 +26,12 @@ export default {
       let i = 0;
       return h("span", {class: "source"}, [
         sources.map(src => {
-          if (src.words && src.words.length > 0) {
-            // Link to the first word in this source
-            let firstWord = src.words[0];
-            return h(RouterLink, { to: "/word/" + firstWord.lang.name + ":" + firstWord.toString(firstWord.lang.name) }, () => `[${++i}]`);
+          // Check if source is a URL
+          if (src.isLink()) {
+            // External link for URLs
+            return h("a", { href: src.value, target: "_blank" }, () => `[${++i}]`);
           } else {
-            // Fallback to source detail page if no words available
+            // Link to internal source page using router
             return h(RouterLink, { to: "/source/" + src.link }, () => `[${++i}]`);
           }
         })
