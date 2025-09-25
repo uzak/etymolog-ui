@@ -3,18 +3,22 @@
     <Header>Dictionaries</Header>
     
     <table>
-      <tr>
-        <th>Language</th>
-        <th>Size (Words)</th>
-      </tr>
-      <tr v-for="language in languages" :key=language.name>
-        <td>
-          <router-link :to="'/dictionaries/' + language.name">{{ language.name }}</router-link>
-        </td>
-        <td>
-          {{ language.wordCount() }}
-        </td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Language</th>
+          <th>Size (Words)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="language in languages" :key=language.name>
+          <td>
+            <router-link :to="'/dictionaries/' + language.name">{{ language.name }}</router-link>
+          </td>
+          <td>
+            {{ language.wordCount() }}
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>

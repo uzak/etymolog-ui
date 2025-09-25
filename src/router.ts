@@ -10,7 +10,7 @@ import SourceDetail from './views/SourceDetail.vue'
 import Search from './views/Search.vue'
 
 export default createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.NODE_ENV === 'production' ? '/etymolog/' : '/'),
   routes: [
     {
       path: '/',

@@ -1,7 +1,8 @@
 <script>
+import { h, resolveComponent } from 'vue'
+
 export default {
   name: 'WordNode',
-  functional: true,
   props: {
     word: {
       required: true
@@ -15,16 +16,24 @@ export default {
       default: false
     }
   },
-  render(createElement, context) {
-    let word = context.props.word;
-    let selected = context.props.selected;
-    let inUnion = context.props.inUnion;
+  render() {
+    let word = this.word;
+    let selected = this.selected;
+    let inUnion = this.inUnion;
+    const RouterLink = resolveComponent('router-link');
 
     function renderSources(sources) {
       let i = 0;
-      return createElement("span", {attrs: {class: "source"}}, [
+      return h("span", {class: "source"}, [
         sources.map(src => {
-          return createElement("router-link", { attrs: {to: "/source/" + src.link }}, `[${++i}]`);
+          if (src.words && src.words.length > 0) {
+            // Link to the first word in this source
+            let firstWord = src.words[0];
+            return h(RouterLink, { to: "/word/" + firstWord.lang.name + ":" + firstWord.toString(firstWord.lang.name) }, () => `[${++i}]`);
+          } else {
+            // Fallback to source detail page if no words available
+            return h(RouterLink, { to: "/source/" + src.link }, () => `[${++i}]`);
+          }
         })
       ]);
     }
@@ -32,13 +41,13 @@ export default {
     function renderUnions(word) {
       if (word.unions.length) {
         let u_counter = 0;
-        return createElement("span", [
+        return h("span", [
           " {",
           ...word.unions.map(union => {
             let c_counter = 0;
             let components = union.components.filter(comp => comp != null).map(comp => {
               let result = [];
-              result.push(createElement("router-link", { attrs: {to: "/word/" + comp.toString() }}, comp.toString(word.lang.name)));
+              result.push(h(RouterLink, { to: "/word/" + comp.lang.name + ":" + comp.toString() }, () => comp.lang.name + ":" + comp.toString(word.lang.name)));
               if (++c_counter < union.components.length) {
                 result.push(" + ");
               }
@@ -55,36 +64,36 @@ export default {
     }
 
     function link(word) {
-      return createElement("router-link", { attrs: { to: "/word/" + word.toString()}}, word.toString());
+      return h(RouterLink, { to: "/word/" + word.lang.name + ":" + word.toString(word.lang.name)}, () => word.lang.name + ":" + word.toString(word.lang.name));
     }
 
     let tags = word.tags.map(t => {
       return [
-        createElement("router-link", { attrs: {class: "tag", to: "/tag/" + t} }, `#${t}`),
-        createElement("span")
+        h(RouterLink, { class: "tag", to: "/tag/" + t }, () => `#${t}`),
+        h("span")
       ];
     });
 
     let comments = word.comments.map(c => {
       return [
-        createElement("span", { attrs: {class: "comment"} }, c.toString()),
-        createElement("span")
+        h("span", { class: "comment" }, c),
+        h("span")
       ];
     });
 
     let equals = word.equals.map(r => {
       let other = r.other(word);
       return [
-        createElement("span", ["= ", link(other)]),
-        renderSources(other.getSources())
+        h("span", ["= ", link(other)]),
+        renderSources(r.getSources())
       ];
     });
 
     let related = word.related.map(r => {
       let other = r.other(word);
       return [
-        createElement("span", { attrs: {class: "related"}}, ["~ ", link(other)]),
-        renderSources(other.getSources())
+        h("span", { class: "related"}, ["~ ", link(other)]),
+        renderSources(r.getSources())
       ];
     });
 
@@ -95,12 +104,12 @@ export default {
     if (inUnion)
       attrs.class += " in-union";
 
-    let header = createElement("span", {attrs: { class: "header" }}, [link(word), renderUnions(word)]);
+    let header = h("span", { class: "header" }, [link(word), renderUnions(word)]);
     if (selected)
-      header = createElement("span", {attrs: { class: "header" }}, [word.toString(), renderUnions(word)]);
+      header = h("span", { class: "header" }, [word.toString(word.lang.name), renderUnions(word)]);
 
-    return createElement("code", { attrs: attrs}, [
-      createElement("div", { attrs: {class: "container"} },  [
+    return h("code", attrs, [
+      h("div", { class: "container" },  [
         header,
         renderSources(word.getSources()),
         ...tags,

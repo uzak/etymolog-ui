@@ -136,12 +136,12 @@ class Word extends Entity {
     public unions:      Array<Union> = [];
     public inUnions:    Array<Union> = [];
 
-    constructor(value: string, lang: Language, ...comments: Array<string>) {
+    constructor(value: string, lang: Language, ..._comments: Array<string>) {
         super();
         this.value = value;
         this.lang = lang;
         lang.words.set(value, this);
-        Array.prototype.push.apply(this.comments, comments);
+        Array.prototype.push.apply(this.comments, _comments);
     }
 
     public setTags(tags: Array<string>) { // TODO change to TS syntax
@@ -199,19 +199,19 @@ abstract class Relationship extends Entity {
     public left: Word;
     public right: Word;
     
-    constructor(left: Word, right: Word, ...comments: Array<string>) {
+    constructor(left: Word, right: Word, ..._comments: Array<string>) {
         super();
         this.left = left;
         this.right = right;
-        Array.prototype.push.apply(this.comments, comments);
+        Array.prototype.push.apply(this.comments, _comments);
     }
 }
 
 class Equals extends Relationship {
     public static Table: Array<Relationship> = new Array;
     
-    constructor(left: Word, right: Word, ...comments: Array<string>) {
-        super(left, right);
+    constructor(left: Word, right: Word, ..._comments: Array<string>) {
+        super(left, right, ..._comments);
 
         left.equals.push(this);
         right.equals.push(this);
@@ -226,8 +226,8 @@ class Equals extends Relationship {
 class Derived extends Relationship {
     public static Table: Array<Relationship> = new Array;
 
-    constructor(left: Word, right: Word, ...comments: Array<string>) {
-        super(left, right);
+    constructor(left: Word, right: Word, ..._comments: Array<string>) {
+        super(left, right, ..._comments);
 
         left.derives.push(this);
         right.derivedFrom.push(this);
@@ -238,8 +238,8 @@ class Derived extends Relationship {
 class Related extends Relationship {
     public static Table: Array<Relationship> = new Array;
 
-    constructor(left: Word, right: Word, ...comments: Array<string>) {
-        super(left, right);
+    constructor(left: Word, right: Word, ..._comments: Array<string>) {
+        super(left, right, ..._comments);
 
         left.related.push(this);
         right.related.push(this);
@@ -251,7 +251,7 @@ class Related extends Relationship {
     }
 }
 
-import * as data from '../public/db.json';
+import data from '../public/db.json';
 
 for (const word of data.words) {
     let l = Language.get(word.lang);
