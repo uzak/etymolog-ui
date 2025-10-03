@@ -20,7 +20,10 @@
       "Bash(git rev-list:*)",
       "Bash(yarn version:*)",
       "Bash(npm run dev:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(git commit:*)",
+      "Bash(npm audit:*)",
+      "Bash(yarn cache:*)"
     ],
     "deny": [],
     "ask": []
