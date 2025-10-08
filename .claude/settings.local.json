@@ -23,7 +23,9 @@
       "Bash(npm run:*)",
       "Bash(git commit:*)",
       "Bash(npm audit:*)",
-      "Bash(yarn cache:*)"
+      "Bash(yarn cache:*)",
+      "Bash(gh pr list:*)",
+      "Bash(npm outdated)"
     ],
     "deny": [],
     "ask": []
