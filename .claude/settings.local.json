@@ -25,7 +25,12 @@
       "Bash(npm audit:*)",
       "Bash(yarn cache:*)",
       "Bash(gh pr list:*)",
-      "Bash(npm outdated)"
+      "Bash(npm outdated)",
+      "Bash(gh pr view:*)",
+      "Bash(npm ls:*)",
+      "Bash(gh pr close:*)",
+      "Bash(yarn audit:*)",
+      "Bash(npm info:*)"
     ],
     "deny": [],
     "ask": []
